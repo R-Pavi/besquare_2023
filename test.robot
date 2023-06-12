@@ -13,7 +13,7 @@ ${markets_section}   //*[@id="market-fold"]
 ${deriv_life}    //*[text()="deriv life"]//parent::div
 
 # Footer
-${youtube}    //a[@href="https://www.youtube.com/@derivlife"]
+${youtube}    //a[@href="https://www.youtube.com/@deriv"]
 ${reddit}    //a[@href="https://www.reddit.com/user/Deriv_official/"]
 ${telegram}    //a[@href="https://t.me/derivdotcomofficial"]
 ${facebook}    //a[@href="https://www.facebook.com/derivdotcom"]
@@ -69,7 +69,7 @@ Open Trade Menu
     Wait Until Page Contains     Trade types
     Mouse Over    //p[text()="Trade"]
 Open About US Menu
-    Click Element    //button[@id="radix-5-trigger-_t_About us_t_"]
+    Mouse Over    //button[@id="radix-5-trigger-_t_About us_t_"]
     Wait Until Page Contains Element   //a[@href="/who-we-are/"]    30
 
 Check Trade Types
@@ -91,7 +91,7 @@ Check Trading Platforms
     Page Should Contain    Trade the world’s markets with our popular user-friendly platform.
     Page Should Contain Element    ${deriv_trader}
     Page Should Contain    A whole new trading experience on a powerful yet easy to use platform.
-    Page Should Not Contain Element    ${deriv_go}
+    Page Should Contain Element    ${deriv_go}
     Page Should Contain    Trade multipliers on forex, cryptocurrencies, and synthetic indices with our mobile app.
     Page Should Contain Element    ${deriv_bot}
     Page Should Contain    Automated trading at your fingertips. No coding needed.
@@ -110,7 +110,8 @@ Switch To Financial
         Click Element    //p[contains(@class,"typography__Text") and text()="Financial"]
 
 Check Swap Charge
-     ${expected_swap}=    Evaluate    100*100000*10*0.5 
+     ${expected_swap}=    Evaluate    100*100000*10*0.5
+     ${expected_swap}=      Evaluate     "{:,.0f}".format($expected_swap)
      Element Text Should Be    //*[text()="USD"]//preceding-sibling::div     ${expected_swap}
 
 *** Test Cases ***
@@ -125,6 +126,7 @@ Check Traders Menu
 Check Deriv Life
     Open About US Menu
     Click Element    ${deriv_life}
+    Switch Window    title:Deriv Life
     Page Should Contain    Making an impact that matters
 #check social media link is correct
 Check Social Networks
